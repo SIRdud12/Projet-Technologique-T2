@@ -24,10 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = 'L\'adresse email n\'est pas valide.';
     } else {
         $roles = 'User';
+        $Statu = 'en attente';
 
-        $query = "INSERT INTO Utilisateur (Email, MDP, Nom, Prenom, roles) VALUES (?, ?, ?, ?, ?)";
+        // Correcting the number of values in the INSERT statement
+        $query = "INSERT INTO Utilisateur (Email, MDP, Nom, Prenom, roles, Statu) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($connection, $query);
-        mysqli_stmt_bind_param($stmt, "sssss", $mail, $password, $nom, $prenom, $roles);
+        mysqli_stmt_bind_param($stmt, "ssssss", $mail, $password, $nom, $prenom, $roles, $Statu);
         
         if (mysqli_stmt_execute($stmt)) {
             $userId = mysqli_insert_id($connection);
