@@ -1,4 +1,5 @@
- @import url('https://fonts.googleapis.com/css2?family=YourKikoFont&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=YourKikoFont&display=swap'); 
+
 body {
     font-family: Arial, sans-serif;
     margin-bottom: 80px; /* To accommodate the fixed footer */
@@ -19,6 +20,44 @@ header nav ul {
     list-style: none;
 }
 
+header nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+header .btn {
+    margin-left: 10px;
+}
+
+header .dropdown-menu {
+    min-width: 200px;
+}
+
+header .dropdown-menu form {
+    width: 100%;
+}
+
+header .dropdown-menu form .form-label {
+    margin-bottom: 5px;
+}
+
+header .dropdown-menu form .form-control {
+    margin-bottom: 10px;
+}
+
+#loginForm #error-message {
+    color: red;
+}
+
+/* Footer */
 footer {
     background-color: #343a40; /* Dark background color to match the header */
     color: #ffffff; /* White text color */
@@ -74,11 +113,16 @@ footer a:hover {
 
 .social-links li {
     display: inline;
+    margin: 0 10px;
 }
 
-.social-links img {
-    width: 24px;
-    height: 24px;
+.social-links a {
+    color: #f8f9fa;
+    font-size: 1.25rem;
+}
+
+.social-links a:hover {
+    color: #adb5bd;
 }
 
 /* Responsive adjustments */
@@ -87,4 +131,17 @@ footer a:hover {
         flex-direction: column;
         align-items: center;
     }
+}
+
+main {
+    padding: 20px;
+}
+
+main h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+main p {
+    font-size: 1.2rem;
 }

@@ -1,3 +1,36 @@
+<?php
+session_start();
+include('../Gate/db.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $mail = $_POST['mail'];
+    $password = $_POST['password'];
+
+    $query_user = "SELECT * FROM Utilisateur WHERE Email = ? AND MDP = ?";
+    $stmt_user = mysqli_prepare($connection, $query_user);
+    mysqli_stmt_bind_param($stmt_user, "ss", $mail, $password);
+    mysqli_stmt_execute($stmt_user);
+    $result_user = mysqli_stmt_get_result($stmt_user);
+
+    if ($user = mysqli_fetch_assoc($result_user)) {
+        $_SESSION['user_id'] = $user['IDUser'];
+        $_SESSION['nom'] = $user['Nom'];
+        $_SESSION['prenom'] = $user['Prenom'];
+        $_SESSION['mail'] = $user['Email'];
+        $_SESSION['roles'] = $user['roles'];
+
+        if ($user['roles'] === 'Admin') {
+            $_SESSION['admin_id'] = $user['IDUser'];
+        }
+
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Identifiants incorrects']);
+    }
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -52,47 +85,53 @@
                     </ul>
                 </nav>
                 <div>
-                    <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
-                    <div class="dropdown-menu p-4">
-                        <form>
-                            <div class="mb-3">
-                                <label for="exampleDropdownFormEmail2" class="form-label">Adresse email</label>
-                                <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleDropdownFormPassword2" class="form-label">Mot de passe</label>
-                                <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Mot de passe">
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                                    <label class="form-check-label" for="dropdownCheck2">Se souvenir de moi</label>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <span class="me-2"><?php echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']; ?></span>
+                        <a href="logout.php" class="btn btn-outline-light">Se déconnecter</a>
+                    <?php else: ?>
+                        <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
+                        <div class="dropdown-menu p-4">
+                            <form id="loginForm" method="post">
+                                <div id="error-message" style="color: red;"></div>
+                                <div class="mb-3">
+                                    <label for="exampleDropdownFormEmail2" class="form-label">Adresse email</label>
+                                    <input type="email" class="form-control" id="exampleDropdownFormEmail2" name="mail" placeholder="email@example.com" required>
                                 </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Se connecter</button>
-                        </form>
-                    </div>
-                    <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">S'inscrire</button>
-                    <div class="dropdown-menu p-4">
-                        <form>
-                            <div class="mb-3">
-                                <label for="exampleDropdownFormEmail2" class="form-label">Adresse email</label>
-                                <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleDropdownFormPassword2" class="form-label">Mot de passe</label>
-                                <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Mot de passe">
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                                    <label class="form-check-label" for="dropdownCheck2">Se souvenir de moi</label>
+                                <div class="mb-3">
+                                    <label for="exampleDropdownFormPassword2" class="form-label">Mot de passe</label>
+                                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" name="password" placeholder="Mot de passe" required>
                                 </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Se connecter</button>
-                        </form>
-                    </div>
-                    <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                                        <label class="form-check-label" for="dropdownCheck2">Se souvenir de moi</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Se connecter</button>
+                            </form>
+                        </div>
+                        <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">S'inscrire</button>
+                        <div class="dropdown-menu p-4">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="exampleDropdownFormEmail2" class="form-label">Adresse email</label>
+                                    <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleDropdownFormPassword2" class="form-label">Mot de passe</label>
+                                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Mot de passe">
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                                        <label class="form-check-label" for="dropdownCheck2">Se souvenir de moi</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">S'inscrire</button>
+                            </form>
+                        </div>
+                        <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -164,31 +203,28 @@
         </div>
     </footer>
 
-    <style>
-        footer {
-            background-color: #343a40;
-            color: #f8f9fa;
-        }
-        footer h5 {
-            margin-bottom: 1rem;
-        }
-        footer ul {
-            padding-left: 0;
-            list-style: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        .social-links a {
-            color: #f8f9fa;
-            font-size: 1.25rem;
-        }
-        .social-links a:hover {
-            color: #adb5bd;
-        }
-    </style>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="scripts.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '', true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        window.location.href = 'Gate.php';
+                    } else {
+                        document.getElementById('error-message').innerText = response.message;
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
 </body>
 </html>
