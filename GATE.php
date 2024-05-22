@@ -72,7 +72,26 @@
                             <button type="submit" class="btn btn-primary">Se connecter</button>
                         </form>
                     </div>
-                    <button class="btn btn-light">S'inscrire</button>
+                    <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">S'inscrire</button>
+                    <div class="dropdown-menu p-4">
+                        <form>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormEmail2" class="form-label">Adresse email</label>
+                                <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleDropdownFormPassword2" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Mot de passe">
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                                    <label class="form-check-label" for="dropdownCheck2">Se souvenir de moi</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Se connecter</button>
+                        </form>
+                    </div>
                     <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
                 </div>
             </div>
