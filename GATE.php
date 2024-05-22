@@ -54,6 +54,7 @@
                 <div>
                     <button class="btn btn-outline-light me-2">Se connecter</button>
                     <button class="btn btn-light">S'inscrire</button>
+                     <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
                 </div>
             </div>
         </div>
