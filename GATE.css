@@ -61,8 +61,8 @@ header .dropdown-menu form .form-control {
 footer {
     background-color: #343a40; /* Dark background color to match the header */
     color: #ffffff; /* White text color */
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    bottom: -20%;
     width: 100%;
     text-align: center;
     padding: 20px 0;
@@ -71,12 +71,14 @@ footer {
 
 footer h5 {
     margin-bottom: 1rem;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 footer ul {
     padding-left: 0;
     list-style: none;
+    font-size: 12px;
+
 }
 
 footer a {

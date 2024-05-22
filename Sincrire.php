@@ -1,36 +1,3 @@
-<?php
-session_start();
-include('../Gate/db.php');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $mail = $_POST['mail'];
-    $password = $_POST['password'];
-
-    $query_user = "SELECT * FROM Utilisateur WHERE Email = ? AND MDP = ?";
-    $stmt_user = mysqli_prepare($connection, $query_user);
-    mysqli_stmt_bind_param($stmt_user, "ss", $mail, $password);
-    mysqli_stmt_execute($stmt_user);
-    $result_user = mysqli_stmt_get_result($stmt_user);
-
-    if ($user = mysqli_fetch_assoc($result_user)) {
-        $_SESSION['user_id'] = $user['IDUser'];
-        $_SESSION['nom'] = $user['Nom'];
-        $_SESSION['prenom'] = $user['Prenom'];
-        $_SESSION['mail'] = $user['Email'];
-        $_SESSION['roles'] = $user['roles'];
-
-        if ($user['roles'] === 'Admin') {
-            $_SESSION['admin_id'] = $user['IDUser'];
-        }
-
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Identifiants incorrects']);
-    }
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -61,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Ressources</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Blog</a></li>
-                                <li><a class="dropdown-item" href="#">Gate Académie</a></li>
+                                <li><a class="dropdown-item" href="#">Gate Academie</a></li>
                                 <li><a class="dropdown-item" href="#">Site d'aide</a></li>
                             </ul>
                         </li>
@@ -81,39 +48,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <li><a class="dropdown-item" href="#">Clipper</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="#" class="nav-link text-white">Tarifs</a></li>
+                         <li class="nav-item"><a href="#" class="nav-link text-white">Tarifs</a></li>
                     </ul>
                 </nav>
                 <div>
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <span class="me-2"><?php echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']; ?></span>
-                        <a href="logout.php" class="btn btn-outline-light">Se déconnecter</a>
-                    <?php else: ?>
-                        <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
-                        <div class="dropdown-menu p-4">
-                            <form id="loginForm" method="post">
-                                <div id="error-message" style="color: red;"></div>
-                                <div class="mb-3">
-                                    <label for="exampleDropdownFormEmail2" class="form-label">Adresse email</label>
-                                    <input type="email" class="form-control" id="exampleDropdownFormEmail2" name="mail" placeholder="email@example.com" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleDropdownFormPassword2" class="form-label">Mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" name="password" placeholder="Mot de passe" required>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                                        <label class="form-check-label" for="dropdownCheck2">Se souvenir de moi</label>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Se connecter</button>
-                            </form>
+                  <!--  <button class="btn btn-outline-light me-2">Se connecter</button> -->
+                   <!-- <div class="dropdown"> -->
+                <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
+                    <form class="dropdown-menu p-4">
+                        <div class="mb-3">
+                            <label for="exampleDropdownFormEmail2" class="form-label">Email address</label>
+                                 <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
                         </div>
-                        <a  href="Sincrire.php" class="btn btn-light">S'inscrire</button>
-
-                        <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
-                    <?php endif; ?>
+                         <div class="mb-3">
+                                <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+                                        </div>
+                        <div class="mb-3">
+                        <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                                <label class="form-check-label" for="dropdownCheck2">
+          Remember me
+                                </label>
+                       
+                        </div>
+    <button type="submit" class="btn btn-primary">Connecter</button>
+  </form>
+</div>
+                     <a  href="Sincrire.php" class="btn btn-light">S'inscrire</button>
+                     <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
                 </div>
             </div>
         </div>
@@ -121,13 +84,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Main Content -->
     <main class="py-5">
-        <div class="container">
-            <h2>Bienvenue sur Gate</h2>
-            <p>Votre outil de gestion de projet ultime.</p>
-        </div>
+       <form class="row g-3 needs-validation" novalidate>
+  <div class="col-md-4">
+    <label for="validationCustom01" class="form-label">Nom</label>
+    <input type="text" class="form-control" id="validationCustom01" value="" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustom02" class="form-label">Prenom</label>
+    <input type="text" class="form-control" id="validationCustom02" value="" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+   <div class="col-md-4">
+    <label for="validationCustom05" class="form-label">E-mail address</label>
+    <input type="email" class="form-control" id="validationCustom05" required>
+    <div class="invalid-feedback">
+      Veuillez fournir une adresse valide.
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationCustom03" class="form-label">Mot de Passe</label>
+    <input type="password" class="form-control" id="validationCustom03" required>
+    <div class="invalid-feedback">
+      Veuiller choisir un bon mot de passe.
+    </div>
+  </div>
+   <div class="col-md-6">
+    <label for="validationCustom03" class="form-label">Confirmer mot de Passe</label>
+    <input type="password" class="form-control" id="validationCustom03" required>
+    <div class="invalid-feedback">
+      Le mot de passe ne correspondant pas.
+    </div>
+  </div>
+ 
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+      <label class="form-check-label" for="invalidCheck">
+        Agree to terms and conditions
+      </label>
+      <div class="invalid-feedback">
+        Vous devez accepter avant de continuer.
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">S'inscrire</button>
+  </div>
+</form>
     </main>
 
-    <!-- Footer -->
+  <!-- Footer -->
     <footer class="bg-dark text-white py-5">
         <div class="container">
             <div class="row">
@@ -142,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="col-md-3">
                     <h5>Produit</h5>
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled">   
                         <li><a href="#" class="text-white text-decoration-none">Fonctionnalités</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Tarifs</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Intégrations</a></li>
@@ -185,28 +196,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="scripts.js"></script>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
 
-            const formData = new FormData(this);
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '', true);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        window.location.href = 'Gate.php';
-                    } else {
-                        document.getElementById('error-message').innerText = response.message;
-                    }
-                }
-            };
-            xhr.send(formData);
-        });
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
     </script>
 </body>
 </html>
