@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="bg-dark text-white py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3">Gate</h1>
+                <a href="GATE.php" class="text-white text-decoration-none"><h1 class="h3 mb-0">Gate</h1></a>
                 <nav>
                     <ul class="nav">
                         <li class="nav-item dropdown">
@@ -84,18 +84,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <li class="nav-item"><a href="#" class="nav-link text-white">Tarifs</a></li>
                     </ul>
                 </nav>
-                <div>
+                <div class="d-flex align-items-center">
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <span class="me-2"><?php echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']; ?></span>
+                        <span class="me-1"><?php echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']; ?></span>
                         <?php if (isset($_SESSION['admin_id'])): ?>
-                            <a href="admin.php" class="btn btn-light">Admin</a>
+                            <a href="admin.php" class="btn btn-light me-2">Admin</a>
                         <?php endif; ?>
                         <?php if ($_SESSION['statu'] === 'accepter' || $_SESSION['statu'] === 'Admin'): ?>
-                            <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
+                            <a href="Essayer_gate.php" class="btn btn-light me-1">Essayer Gate</a>
                         <?php endif; ?>
-                        <a href="logout.php" class="btn btn-outline-light">Se déconnecter</a>
+                        <a href="logout.php" class="btn btn-outline-light ms-2">Se déconnecter</a>
                     <?php else: ?>
-                        <button class="btn btn-outline-light me-2" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
+
+                        <button class="btn btn-outline-light me-1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
                         <div class="dropdown-menu p-4">
                             <form id="loginForm" method="post">
                                 <div id="error-message" style="color: red;"></div>
@@ -134,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white text-decoration-none">Accueil</a></li>
                         <li><a href="#" class="text-white text-decoration-none">À propos</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Contact</a></li>
+                        <li><a href="contact.html" class="text-white text-decoration-none">Contact</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Blog</a></li>
                     </ul>
                 </div>

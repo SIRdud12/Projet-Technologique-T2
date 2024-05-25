@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=YourKikoFont&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=YourKikoFont&display=swap');
 
 body {
     font-family: Arial, sans-serif;
@@ -12,6 +12,11 @@ nav {
 
 header h1 {
     margin: 0;
+}
+
+header a {
+    text-decoration: none; /* Enlève le soulignement */
+    color: inherit; /* Utilise la couleur du texte environnant */
 }
 
 header nav ul {
@@ -77,9 +82,10 @@ footer h5 {
 footer ul {
     padding-left: 0;
     list-style: none;
-    font-size: 12px;
-
+    font-size: 14px;
 }
+
+
 
 footer a {
     color: #ffffff; /* White text color */

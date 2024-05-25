@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="bg-dark text-white py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3">Gate</h1>
+                 <a href="GATE.php"><h1 class="h3">Gate</h1></a>
                 <nav>
                     <ul class="nav">
                         <!-- Nav items here -->
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" class="btn btn-primary">Connecter</button>
                     </form>
                     <a href="signup.php" class="btn btn-light">S'inscrire</a>
-                    <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
+                   <!-- <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a> -->
                 </div>
             </div>
         </div>
