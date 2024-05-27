@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="bg-dark text-white py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3">Gate</h1>
+            <a href="gate.php" class="text-white text-decoration-none"><h1 class="h3 mb-0">Gate</h1></a>
                 <nav>
                     <ul class="nav">
                         <!-- Nav items here -->
