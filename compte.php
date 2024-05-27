@@ -278,17 +278,20 @@ if (isset($_GET['photo_deleted']) && $_GET['photo_deleted'] == '1') {
                 <?php if ($user_info && $user_info['photo'] !== 'default.png'): ?>
                 <div class="col-md-12">
                     <img src="pdp/<?php echo htmlspecialchars($user_info['photo']); ?>" alt="Photo de profil" width="150"><br>
-                    <form method="post" action="">
-                        <input type="hidden" name="delete_photo" value="1">
-                        <button type="submit" class="btn btn-danger mt-2">Supprimer la photo de profil</button>
-                    </form>
                 </div>
                 <?php endif; ?>
-                <div class="col-12">
+                <div class="col-12 d-flex justify-content-start gap-2">
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
-                </div>
-                <div class="col-12">
-                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">Supprimer mon compte</button>
+                    <?php if ($user_info && $user_info['photo'] !== 'default.png'): ?>
+                        <form method="post" action="" class="d-inline">
+                            <input type="hidden" name="delete_photo" value="1">
+                            <button type="submit" class="btn btn-danger">Supprimer la photo de profil</button>
+                        </form>
+                    <?php endif; ?>
+                    <form method="post" action="" class="d-inline">
+                        <input type="hidden" name="confirm_delete" value="1">
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete()">Supprimer mon compte</button>
+                    </form>
                 </div>
             </form>
         </div>
