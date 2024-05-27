@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['prenom'] = $user['Prenom'];
         $_SESSION['mail'] = $user['Email'];
         $_SESSION['statu'] = $user['Statu'];
+        $_SESSION['photo'] = $user['photo'];
 
         if ($user['Statu'] === 'Admin') {
             $_SESSION['admin_id'] = $user['IDUser'];
@@ -28,6 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'message' => 'Identifiants incorrects']);
     }
     exit();
+}
+
+$user_info = null;
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+
+    $query = "SELECT * FROM Utilisateur WHERE IDUser = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "s", $user_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $user_info = mysqli_fetch_assoc($result);
+
+    mysqli_stmt_close($stmt);
 }
 ?>
 
@@ -85,17 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </ul>
                 </nav>
                 <div class="d-flex align-items-center">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <span class="me-1"><?php echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']; ?></span>
+                    <?php if ($user_info): ?>
+                        <span class="me-1">
+                            <?php echo htmlspecialchars($user_info['Prenom'] . ' ' . $user_info['Nom']); ?>
+                            <?php if (!empty($user_info['photo'])): ?>
+                                <img src="pdp/<?php echo htmlspecialchars($user_info['photo']); ?>" alt="Profile Picture" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
+                            <?php endif; ?>
+                        </span>
                         <?php if (isset($_SESSION['admin_id'])): ?>
                             <a href="admin.php" class="btn btn-light me-2">Admin</a>
                         <?php endif; ?>
-                        <?php if ($_SESSION['statu'] === 'accepter' || $_SESSION['statu'] === 'Admin'): ?>
+                        <?php if (isset($_SESSION['statu']) && ($_SESSION['statu'] === 'accepter' || $_SESSION['statu'] === 'Admin')): ?>
                             <a href="Essayer_gate.php" class="btn btn-light me-1">Essayer Gate</a>
                         <?php endif; ?>
                         <a href="logout.php" class="btn btn-outline-light ms-2">Se déconnecter</a>
                     <?php else: ?>
-
                         <button class="btn btn-outline-light me-1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
                         <div class="dropdown-menu p-4">
                             <form id="loginForm" method="post">
