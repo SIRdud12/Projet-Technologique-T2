@@ -113,6 +113,7 @@ if (isset($_SESSION['user_id'])) {
                         <?php if (isset($_SESSION['statu']) && ($_SESSION['statu'] === 'accepter' || $_SESSION['statu'] === 'Admin')): ?>
                             <a href="Essayer_gate.php" class="btn btn-light me-1">Essayer Gate</a>
                         <?php endif; ?>
+                        <a href="compte.php" class="btn btn-outline-light ms-2">Compte</a>
                         <a href="logout.php" class="btn btn-outline-light ms-2">Se déconnecter</a>
                     <?php else: ?>
                         <button class="btn btn-outline-light me-1" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Se connecter</button>
