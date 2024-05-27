@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail = $_POST['mail'];
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
+    $photo = 'default.png'; // Default profile photo
 
     // Check if email is already used
     $query_check_email = "SELECT * FROM Utilisateur WHERE Email = ?";
@@ -25,10 +26,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $Statu = 'en attente';
 
+        // Handle the file upload
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] == UPLOAD_ERR_OK) {
+            $upload_dir = 'pdp/';
+            $uploaded_file = $upload_dir . basename($_FILES['photo']['name']);
+
+            // Ensure the upload directory exists
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+
+            // Move the uploaded file to the target directory
+            if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploaded_file)) {
+                $photo = basename($_FILES['photo']['name']);
+            } else {
+                $error_message = "Échec du téléchargement de la photo.";
+            }
+        }
+
         // Insert user data into the database
-        $query = "INSERT INTO Utilisateur (Email, MDP, Nom, Prenom, Statu) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Utilisateur (Email, MDP, Nom, Prenom, Statu, photo) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($connection, $query);
-        mysqli_stmt_bind_param($stmt, "sssss", $mail, $password, $nom, $prenom, $Statu);
+        mysqli_stmt_bind_param($stmt, "ssssss", $mail, $password, $nom, $prenom, $Statu, $photo);
         
         if (mysqli_stmt_execute($stmt)) {
             $userId = mysqli_insert_id($connection);
@@ -60,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="bg-dark text-white py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                 <a href="GATE.php"><h1 class="h3">Gate</h1></a>
+                <h1 class="h3">Gate</h1>
                 <nav>
                     <ul class="nav">
                         <!-- Nav items here -->
@@ -86,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" class="btn btn-primary">Connecter</button>
                     </form>
                     <a href="signup.php" class="btn btn-light">S'inscrire</a>
-                   <!-- <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a> -->
+                    <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
                 </div>
             </div>
         </div>
@@ -97,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error_message)) : ?>
             <p style="color: red;"><?php echo $error_message; ?></p>
         <?php endif; ?>
-        <form class="row g-3 needs-validation" novalidate method="post" action="">
+        <form class="row g-3 needs-validation" novalidate method="post" action="" enctype="multipart/form-data">
             <div class="col-md-4">
                 <label for="nom" class="form-label">Nom</label>
                 <input type="text" class="form-control" id="nom" name="nom" required>
@@ -118,6 +137,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="invalid-feedback">
                     Veuillez fournir une adresse valide.
                 </div>
+            </div>
+            <div class="col-md-4">
+                <label for="photo" class="form-label">Photo de profil</label>
+                <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
             </div>
             <div class="col-md-6">
                 <label for="password" class="form-label">Mot de Passe</label>
@@ -150,8 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </main>
 
-<!-- Footer -->
-<footer class="bg-dark text-white py-5">
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
