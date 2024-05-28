@@ -27,21 +27,28 @@
           </a>
         </li>
         <li>
-          <a href="projet.html">
+          <a href="projet.php">
             <i class="bx bx-box"></i>
             <span class="links_name">Projet</span>
           </a>
         </li>
         <li>
-          <a href="plan.html">
+          <a href="plan.php">
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Plan</span>
           </a>
         </li>
         <li>
-          <a href="Indicateur.html">
+          <a href="Indicateur.php">
             <i class="bx bx-pie-chart-alt-2"></i>
             <span class="links_name">Indicateur clés</span>
+          </a>
+        </li>
+
+         <li>
+          <a href="gestion_client.php" >
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Gestion Client</span>
           </a>
         </li>
         

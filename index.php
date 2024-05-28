@@ -14,34 +14,41 @@
   <body>
     <div class="sidebar">
       <div class="logo-details">
-         <a href="index.html" class="active">
+         <a href="index.php" class="active">
         <i class="bx bxl-c-plus-plus"></i>
         <span class="logo_name">GATE</span>
          </a>
       </div>
       <ul class="nav-links">
         <li>
-          <a href="dashboard.html" >
+          <a href="dashboard.php" >
             <i class="bx bx-grid-alt"></i>
             <span class="links_name">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="projet.html">
+          <a href="projet.php">
             <i class="bx bx-box"></i>
             <span class="links_name">Projet</span>
           </a>
         </li>
         <li>
-          <a href="plan.html">
+          <a href="plan.php">
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Plan</span>
           </a>
         </li>
         <li>
-          <a href="indicateur.html">
+          <a href="indicateur.php">
             <i class="bx bx-pie-chart-alt-2"></i>
             <span class="links_name">Indicateur clés</span>
+          </a>
+        </li>
+
+         <li>
+          <a href="gestion_client.php" >
+            <i class="bx bx-grid-alt"></i>
+           <span class="links_name">Gestion Client</span>
           </a>
         </li>
         
@@ -51,7 +58,7 @@
             <span class="links_name">Calendrier</span>
           </a>
         </li>
-        <li>
+        
             <!--
           <a href="#">
             <i class="bx bx-book-alt"></i>
