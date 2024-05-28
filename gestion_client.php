@@ -24,9 +24,9 @@ function afficherUtilisateurs($conn) {
             echo '<td>' . $row["Prenom"] . '</td>';
             echo '<td>';
             if ($row["Statu"] == 'en attente') {
-                echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="user_id" value="' . $row["IDUser"] . '"><button type="submit" name="accept">Accepter</button></form> ';
+                echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="user_id" value="' . $row["IDUser"] . '"><button type="submit" name="accept" class="btn btn-primary">Accepter</button></form> ';
             }
-            echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="user_id" value="' . $row["IDUser"] . '"><button type="submit" name="delete">Supprimer</button></form>';
+            echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="user_id" value="' . $row["IDUser"] . '"><button type="submit" name="delete" class="btn btn-danger">Supprimer</button></form>';
             echo '</td>';
             echo '</tr>';
         }
@@ -49,10 +49,12 @@ function afficherProjetsEnCours($conn) {
             echo '<td>' . $row["Duree_projet"] . '</td>';
             echo '<td>' . $row["Statu"] . '</td>';
             echo '<td>' . $row["budjet"] . '</td>';
-            echo '<td><a href="projet.php?projet_id=' . $row["IDProjet"] . '">Gérer</a></td>';
             echo '<td>';
-            echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="projet_id" value="' . $row["IDProjet"] . '"><button type="submit" name="modifier_projet">Modifier</button></form> ';
-            echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="projet_id" value="' . $row["IDProjet"] . '"><button type="submit" name="supprimer_projet">Supprimer</button></form>';
+            echo '<form method="post" action="projet.php" style="display:inline-block;"><input type="hidden" name="projet_id" value="' . $row["IDProjet"] . '"><button type="submit" class="btn btn-info">Gérer</button></form>';
+            echo '</td>';
+            echo '<td>';
+            echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="projet_id" value="' . $row["IDProjet"] . '"><button type="submit" name="modifier_projet" class="btn btn-warning">Modifier</button></form> ';
+            echo '<form method="post" action="" style="display:inline-block;"><input type="hidden" name="projet_id" value="' . $row["IDProjet"] . '"><button type="submit" name="supprimer_projet" class="btn btn-danger">Supprimer</button></form>';
             echo '</td>';
             echo '</tr>';
         }
