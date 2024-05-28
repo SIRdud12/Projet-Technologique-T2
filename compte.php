@@ -207,7 +207,7 @@ if (isset($_GET['photo_deleted']) && $_GET['photo_deleted'] == '1') {
                             <?php endif; ?>
                         </span>
                         <?php if (isset($_SESSION['admin_id'])): ?>
-                            <a href="admin.php" class="btn btn-light me-2">Admin</a>
+                            <a href="index.php" class="btn btn-light me-2">Admin</a>
                         <?php endif; ?>
                         <?php if (isset($_SESSION['statu']) && ($_SESSION['statu'] === 'accepter' || $_SESSION['statu'] === 'Admin')): ?>
                             <a href="Essayer_gate.php" class="btn btn-light me-1">Essayer Gate</a>

@@ -1,4 +1,19 @@
 <?php
+session_start();
+include('db.php');
+
+// Check if the user is logged in and has the 'Admin' status
+if (!isset($_SESSION['user_id']) || $_SESSION['statu'] !== 'Admin') {
+    echo "Erreur : Vous n'êtes pas autorisé à accéder à cette page.";
+    exit();
+}
+
+$user_info = [
+    'Prenom' => $_SESSION['prenom'],
+    'Nom' => $_SESSION['nom'],
+    'photo' => $_SESSION['photo']
+];
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -49,7 +64,7 @@ $conn->close();
     <div class="sidebar">
         <!-- Sidebar content -->
         <div class="logo-details">
-            <a href="index.php" class="active">
+            <a href="GATE.php" class="active">
                 <i class="bx bxl-c-plus-plus"></i>
                 <span class="logo_name">GATE</span>
             </a>
@@ -92,7 +107,7 @@ $conn->close();
                 </a>
             </li>
             <li class="log_out">
-                <a href="GATE.php">
+                <a href="logout.php">
                     <i class="bx bx-log-out"></i>
                     <span class="links_name">Déconnexion</span>
                 </a>
@@ -111,7 +126,10 @@ $conn->close();
                 <i class="bx bx-search"></i>
             </div>
             <div class="profile-details">
-                <span class="admin_name">Komche</span>
+                <?php if (!empty($user_info['photo'])): ?>
+                    <img src="pdp/<?php echo htmlspecialchars($user_info['photo']); ?>" alt="Profile Picture" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
+                <?php endif; ?>
+                <span class="admin_name"><?php echo htmlspecialchars($user_info['Prenom'] . ' ' . $user_info['Nom']); ?></span>
                 <i class="bx bx-chevron-down"></i>
             </div>
         </nav>
@@ -174,7 +192,7 @@ $conn->close();
             if (sidebar.classList.contains("active")) {
                 sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
             } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-            }
+        }
     </script>
     <!-- JavaScript pour la validation Bootstrap -->
     <script>

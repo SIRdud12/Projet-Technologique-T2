@@ -1,4 +1,19 @@
 <?php
+session_start();
+include('db.php');
+
+// Check if the user is logged in and has the 'Admin' status
+if (!isset($_SESSION['user_id']) || $_SESSION['statu'] !== 'Admin') {
+    echo "Erreur : Vous n'êtes pas autorisé à accéder à cette page.";
+    exit();
+}
+
+$user_info = [
+    'Prenom' => $_SESSION['prenom'],
+    'Nom' => $_SESSION['nom'],
+    'photo' => $_SESSION['photo']
+];
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -15,8 +30,8 @@ if ($conn->connect_error) {
 if (isset($_POST['add_task'])) {
     $taskName = $_POST['new-task'];
     $taskDeadline = $_POST['new-task-deadline'];
-    $projectId = isset($_POST['IDProjet']) ? $_POST['IDProjet'] : null; // Assurez-vous que IDProjet est défini
-    $userId = isset($_POST['IDUser']) ? $_POST['IDUser'] : null; // Assurez-vous que IDUser est défini
+    $projectId = isset($_POST['IDProjet']) ? $_POST['IDProjet'] : null;
+    $userId = isset($_POST['IDUser']) ? $_POST['IDUser'] : null;
 
     if ($projectId && $userId) {
         $sql = "INSERT INTO Tache (Titre, datefin, IDProjet_avoir, IDUser) VALUES ('$taskName', '$taskDeadline', '$projectId', '$userId')";
@@ -33,14 +48,11 @@ if (isset($_POST['add_task'])) {
 // Supprimer une tâche
 if (isset($_POST['delete_task'])) {
     $taskId = $_POST['task_id'];
-    
-    // Supprimer d'abord les enregistrements associés dans la table 'faire'
+
     $sql = "DELETE FROM faire WHERE IDTache='$taskId'";
     if ($conn->query($sql) === TRUE) {
-        // Supprimer les commentaires associés à cette tâche
         $sql = "DELETE FROM commentaire WHERE IDTache_contenir2='$taskId'";
         if ($conn->query($sql) === TRUE) {
-            // Maintenant, supprimer la tâche
             $sql = "DELETE FROM Tache WHERE IDTache='$taskId'";
             if ($conn->query($sql) === TRUE) {
                 echo "<p>Tâche supprimée avec succès.</p>";
@@ -59,9 +71,8 @@ if (isset($_POST['delete_task'])) {
 if (isset($_POST['add_participant'])) {
     $participantName = $_POST['new-participant-name'];
     $participantRole = $_POST['new-participant-role'];
-    $equipeId = $_POST['equipe-id']; // Assuming a dropdown or hidden input to get the team ID
+    $equipeId = $_POST['equipe-id'];
 
-    // Fetch the IDUser for the participant (assuming it's being added to membreequipe)
     $sql = "SELECT IDUser FROM Utilisateur WHERE Nom='$participantName'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -82,7 +93,7 @@ if (isset($_POST['add_participant'])) {
 if (isset($_POST['add_team'])) {
     $teamName = $_POST['new-team-name'];
 
-    $sql = "INSERT INTO equipe (roles, IDUser) VALUES ('$teamName', 1)"; // Assuming a default user ID
+    $sql = "INSERT INTO equipe (roles, IDUser) VALUES ('$teamName', 1)";
     if ($conn->query($sql) === TRUE) {
         echo "<p>Équipe créée avec succès.</p>";
     } else {
@@ -173,7 +184,7 @@ if (isset($_POST['delete_team'])) {
 <body>
     <div class="sidebar">
         <div class="logo-details">
-            <a href="index.php" class="active">
+            <a href="GATE.php" class="active">
                 <i class="bx bxl-c-plus-plus"></i>
                 <span class="logo_name">GATE</span>
             </a>
@@ -204,7 +215,7 @@ if (isset($_POST['delete_team'])) {
                 </a>
             </li>
             <li>
-                <a href="gestion_client.php" >
+                <a href="gestion_client.php">
                     <i class="bx bx-grid-alt"></i>
                     <span class="links_name">Gestion Client</span>
                 </a>
@@ -216,7 +227,7 @@ if (isset($_POST['delete_team'])) {
                 </a>
             </li>
             <li class="log_out">
-                <a href="GATE.php">
+                <a href="logout.php">
                     <i class="bx bx-log-out"></i>
                     <span class="links_name">Déconnexion</span>
                 </a>
@@ -234,7 +245,10 @@ if (isset($_POST['delete_team'])) {
                 <i class="bx bx-search"></i>
             </div>
             <div class="profile-details">
-                <span class="admin_name">Komche</span>
+                <?php if (!empty($user_info['photo'])): ?>
+                    <img src="pdp/<?php echo htmlspecialchars($user_info['photo']); ?>" alt="Profile Picture" class="rounded-circle" style="width: 30px; height: 30px; object-fit: cover;">
+                <?php endif; ?>
+                <span class="admin_name"><?php echo htmlspecialchars($user_info['Prenom'] . ' ' . $user_info['Nom']); ?></span>
                 <i class="bx bx-chevron-down"></i>
             </div>
         </nav>
