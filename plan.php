@@ -11,45 +11,38 @@
   <body>
     <div class="sidebar">
       <div class="logo-details">
-        <a href="index.php" class="active">
+        <a href="index.html" class="active">
           <i class="bx bxl-c-plus-plus"></i>
           <span class="logo_name">GATE</span>
         </a>
       </div>
       <ul class="nav-links">
         <li>
-          <a href="dashboard.php">
+          <a href="dashboard.html">
             <i class="bx bx-grid-alt"></i>
             <span class="links_name">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="projet.php">
+          <a href="projet.html">
             <i class="bx bx-box"></i>
             <span class="links_name">Projet</span>
           </a>
         </li>
         <li>
-          <a href="plan.php" class="active">
+          <a href="plan.html" class="active">
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Plan</span>
           </a>
         </li>
         <li>
-          <a href="indicateur.php">
+          <a href="indicateur.html">
             <i class="bx bx-pie-chart-alt-2"></i>
             <span class="links_name">Indicateur clés</span>
           </a>
         </li>
-
-         <li>
-          <a href="gestion_client.php" >
-            <i class="bx bx-grid-alt"></i>
-            <span class="links_name">Gestion Client</span>
-          </a>
-        </li>
         <li>
-          <a href="calendrier.php">
+          <a href="calendrier.html">
             <i class="bx bx-coin-stack"></i>
             <span class="links_name">Calendrier</span>
           </a>
