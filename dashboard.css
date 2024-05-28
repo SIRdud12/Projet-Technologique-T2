@@ -350,33 +350,7 @@ nav .profile-details i {
   font-weight: 400;
   color: #333;
 }
-   /* CSS pour les indicateurs clés */
-.key-indicators {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-  padding: 100px;
-}
 
-.key-indicators div {
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.key-indicators h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.key-indicators p {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-}
 /* Responsive Media Query */
 @media (max-width: 1240px) {
   .sidebar {
