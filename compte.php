@@ -186,6 +186,12 @@ if (isset($_GET['photo_deleted']) && $_GET['photo_deleted'] == '1') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="GATE.css">
+    <style>
+        .disabled-email {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -240,7 +246,7 @@ if (isset($_GET['photo_deleted']) && $_GET['photo_deleted'] == '1') {
     <!-- Main Content -->
     <main class="py-5">
         <div class="container">
-            <?php if (isset($error_message)) : ?>
+            <?php if ($error_message) : ?>
                 <p style="color: red;"><?php echo $error_message; ?></p>
             <?php endif; ?>
             <?php if (isset($success_message)) : ?>
@@ -266,7 +272,7 @@ if (isset($_GET['photo_deleted']) && $_GET['photo_deleted'] == '1') {
                 </div>
                 <div class="col-md-4">
                     <label for="mail" class="form-label">E-mail address</label>
-                    <input type="email" class="form-control" id="mail" name="mail" value="<?php echo isset($user_info['Email']) ? $user_info['Email'] : ''; ?>" required>
+                    <input type="email" class="form-control disabled-email" id="mail" name="mail" value="<?php echo isset($user_info['Email']) ? $user_info['Email'] : ''; ?>" disabled>
                     <div class="invalid-feedback">
                         Veuillez fournir une adresse valide.
                     </div>
