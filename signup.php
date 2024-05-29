@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" class="btn btn-primary">Connecter</button>
                     </form>
                     <a href="signup.php" class="btn btn-light">S'inscrire</a>
-                    <a href="Essayer_gate.php" class="btn btn-light">Essayer Gate</a>
+                    <a href="user.php" class="btn btn-light">Essayer Gate</a>
                 </div>
             </div>
         </div>
