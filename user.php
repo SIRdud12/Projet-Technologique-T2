@@ -3,7 +3,7 @@ session_start();
 include('db.php');
 
 // Check if the user is logged in and has the 'Admin' or 'Accepter' status
-if (!isset($_SESSION['user_id']) || ($_SESSION['statu'] !== 'Admin' && $_SESSION['statu'] !== 'Accepter')) {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['statu'], ['Admin', 'accepter'])) {
     echo "Erreur : Vous n'êtes pas autorisé à accéder à cette page.";
     exit();
 }
